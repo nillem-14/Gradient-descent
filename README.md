@@ -6,4 +6,4 @@
 
 **Coordonnée x,y de départ** : the starting point (inside the interval) 
 
-![Figure](/home/nillem/Desktop/idk/Projet/machine learning/descente gradient/figure.png "function : sin(5x)cos(5y)/5")
+![Figure](https://github.com/nillem-14/Gradient-descent/blob/main/figure.png "function : sin(5x)cos(5y)/5")
