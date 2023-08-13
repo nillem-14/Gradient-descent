@@ -1,24 +1,41 @@
 import numpy as np 
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import scipy as sc
 import sympy as sp
 
-def z(x,y):
-    return np.sin(5*x) * np.cos(5*y) / 5
+def latex_to_np(fct): 
+    x,y = sp.symbols('x y')
+    expr = sp.sympify(fct)
+    func = sp.lambdify((x, y), expr, 'numpy')
+    return func
 
-def gradient(x,y): 
-    return np.cos(5*x)*np.cos(5*y), -np.sin(5*x) * np.sin(5*y)
+#def z(x,y):
+    #return np.sin(5*x) * np.cos(5*y) / 5
+
+def gradient(x,y,h=1e-6): 
+    dz_dx = (z(x+h,y) - z(x-h,y)) / (2*h)
+    dz_dy = (z(x,y+h) - z(x,y-h)) / (2*h)
+    return dz_dx, dz_dy
+    
+fct =  input("Formule (format LaTeX): ")
+z = latex_to_np(fct)
+
+a0 = float(input("Coordonée x de départ : "))
+b0 = float(input("Coordonée y de départ : "))
+
+I1 = float(input("début interval : "))
+I2 = float(input("fin interval : "))
 
 
-x = y = np.arange(-1, 1, 0.05)
-
-X, Y = np.meshgrid(x,y)
-Z = z(X,Y)
-
-a0 = 0.7
-b0 = 0.4
 c0 = z(a0,b0)
 current_pos = (a0,b0,c0)
 alpha = 0.01
+
+x = y = np.linspace(I1,I2, 1000)
+
+X, Y = np.meshgrid(x,y)
+Z = z(X,Y)
 
 ax = plt.subplot(projection = '3d', computed_zorder=False)
 
